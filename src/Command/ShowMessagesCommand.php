@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Message;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,7 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 // the name of the command is what users type after "php bin/console"
-#[AsCommand(name: 'app:create-user')]
 class ShowMessagesCommand extends Command
 {
     protected static $defaultName = 'messages:popup';
@@ -18,7 +18,11 @@ class ShowMessagesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
-        $this->io->success('Läuft');
+
+        $messages = [new Message('MVF', 'Alles gut')];
+        foreach ($messages as $message) {
+            exec("XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send '{$message->getTitle()}' '{$message->getText()}'");
+        }
         return Command::SUCCESS;
     }
 }
