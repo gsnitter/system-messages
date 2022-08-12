@@ -23,6 +23,14 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     app.show.messages.command:
-      class: App\Command\ShowMessagesCommand
-      tags:
-          -  { name: console.command } 
+        class: App\Command\ShowMessagesCommand
+        tags:
+            -  { name: console.command }
+
+    App\Lib\MessageStorage:
+        # No idea, why this does not work:
+        # $collectors: !tagged_iterator app.message_collector_interface
+        $collectors: ['@App\Lib\MessageCollector\MVFCollector']
+
+    App\Lib\MessageCollector\MessageCollectorInterface:
+        tags: ['app.message_collector_interface']
