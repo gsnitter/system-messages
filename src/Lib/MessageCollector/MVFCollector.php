@@ -23,7 +23,7 @@ class MVFCollector implements MessageCollectorInterface
     private function getWarnings(): array
     {
         $curlSession = curl_init();
-        curl_setopt($curlSession, CURLOPT_URL, 'https://mvf.medi-verbund.de/api/auftrag/warnings');
+        curl_setopt($curlSession, CURLOPT_URL, 'https://mvf.web-prod-1.rancher-prod-1.medi-verbund.de/api/auftrag/warnings');
         curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($curlSession);
 
